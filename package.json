@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "chat": "node chat.js"
+    "chat": "node chat.js",
+    "call": "node call.js"
   },
   "dependencies": {
     "openai": "^3.1.0"
