@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "chat": "node chat.js",
-    "call": "node call.js",
-    "test": "node test.js",
+    "chat": "node src/chat.js",
+    "call": "node src/call.js",
+    "test": "node src/test.js",
     "db": "yarn prisma generate && yarn prisma db push"
   },
   "dependencies": {
