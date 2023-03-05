@@ -18,14 +18,14 @@ export const findSessionByCallId = async (callId) => {
   })
 }
 
-export const transferSession = async (callId, receiverPhone) => {
+export const transferSession = async (callId, operatorPhone) => {
   return await db.session.update({
     where: {
       callId: callId
     },
     data: {
       transferedAt: new Date(),
-      receiverPhone: receiverPhone
+      operatorPhone: operatorPhone
     }
   })
 }

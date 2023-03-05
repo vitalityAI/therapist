@@ -19,14 +19,17 @@ model Session {
 
   callId String @unique
   callerPhone String @unique
-  receiverPhone String? @unique
+  
+  operatorPhone String? @unique
+  operator Operator? @relation(fields: [operatorPhone], references: [phoneNumber])
+
   messages Message[]
 }
 
 enum Role {
   USER
   BOT
-  REP
+  OPERATOR
 }
 
 model Message {
@@ -38,4 +41,13 @@ model Message {
 
   session Session @relation(fields: [sessionId], references: [id])
   sessionId String @db.ObjectId
+}
+
+model Operator {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  phoneNumber String @unique
+  email String @unique
+
+  sessions Session[]
 }
