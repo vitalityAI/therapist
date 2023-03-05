@@ -38,6 +38,8 @@ export const chat = async (callId) => {
     });
   }
 
+  console.log(messages)
+
   const res = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: messages,
