@@ -19,8 +19,9 @@ import {
   transferSession,
   checkOperatorReady,
   postSummary,
-} from "../lib/session.js";
-import { chat, summarize } from "../lib/chat.js";
+  completeCall,
+} from "./session.js";
+import { chat, summarize } from "./chat.js";
 
 const app = Router();
 app.use(json());
@@ -112,7 +113,9 @@ app.post("/summarize", async (req, res) => {
 app.post("/status", async (req, res) => {
   let callId = req.body.CallSid;
   let callStatus = req.body.CallStatus;
+
   if (callStatus === "completed") {
+    console.log(`completing call ${callId}`);
     await completeCall(callId);
   }
 });
