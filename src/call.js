@@ -109,4 +109,12 @@ app.post("/summarize", async (req, res) => {
   res.send(JSON.stringify({ SessionId: sessionId, summary: summary }));
 });
 
+app.post("/status", async (req, res) => {
+  let callId = req.body.CallSid;
+  let callStatus = req.body.CallStatus;
+  if (callStatus === "completed") {
+    await completeCall(callId);
+  }
+});
+
 export default app;

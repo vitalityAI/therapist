@@ -21,6 +21,17 @@ export const findSessionByCallId = async (callId) => {
   });
 };
 
+export const completeCall = async (callId) => {
+  return await db.session.update({
+    where: {
+      callId: callId,
+    },
+    data: {
+      endedAt: new Date(),
+    },
+  });
+};
+
 export const transferSession = async (callId, operatorPhone) => {
   return await db.session.update({
     where: {
