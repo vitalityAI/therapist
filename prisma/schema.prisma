@@ -20,7 +20,7 @@ model Session {
   callId String @unique
   callerPhone String
   
-  operatorPhone String? @unique
+  operatorPhone String?
   operator Operator? @relation(fields: [operatorPhone], references: [phoneNumber])
 
   messages Message[]
