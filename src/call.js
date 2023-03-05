@@ -34,7 +34,7 @@ app.post("/call", (req, res) => {
 
   // Use <Record> to record and transcribe the caller's message
   const gather = twiml.gather({
-    action: "https://eowj0ew8hq7190e.m.pipedream.net/respond",
+    action: "/respond",
     method: "POST",
     input: "speech",
     language: "en-US",
@@ -49,12 +49,26 @@ app.post("/call", (req, res) => {
   res.send(twiml.toString());
 });
 
-app.post("/respond", (req, res) => {
-  let transcription = req.body.TranscriptionText;
+app.post("/respond", async (req, res) => {
+  let transcription = req.body.SpeechResult;
   console.log(transcription);
 
   const twiml = new VoiceResponse();
-  twiml.say(`You said, {$transcription}`);
+  twiml.say(`You said, ${transcription}`);
+  twiml.say(`Don't kill yourself.`);
+
+  const gather = twiml.gather({
+    action: "/respond",
+    method: "POST",
+    input: "speech",
+    language: "en-US",
+    speechTimeout: "auto",
+  });
+
+  gather.say("Tell us what makes you sad.");
+
+  res.type("text/xml");
+  res.send(twiml.toString());
 });
 
 // Create an HTTP server and listen for requests on port 3000
