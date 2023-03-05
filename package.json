@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "node src/index.js",
     "chat": "node src/chat.js",
     "call": "node src/call.js",
     "test": "node src/test.js",
