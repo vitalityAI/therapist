@@ -11,15 +11,15 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const convertRole = (role) => {
-  switch(role){
+  switch (role) {
     case Role.BOT:
-      return "assistant"
+      return "assistant";
     case Role.USER:
-      return "user"
+      return "user";
     default:
-      return "user"
+      return "user";
   }
-}
+};
 
 export const chat = async (callId) => {
   const msgs = await getMessages(callId);
@@ -38,12 +38,12 @@ export const chat = async (callId) => {
     });
   }
 
-  console.log(messages)
+  console.log(messages);
 
   const res = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: messages,
   });
 
-  return res.data.choices[0].message.content
+  return res.data.choices[0].message.content;
 };
