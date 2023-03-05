@@ -15,6 +15,7 @@
     "@prisma/client": "^4.11.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "loglevel": "^1.8.1",
     "openai": "^3.1.0",
     "twilio": "^4.8.0"
   },

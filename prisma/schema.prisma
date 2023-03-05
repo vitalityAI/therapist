@@ -19,6 +19,8 @@ model Session {
 
   callId String @unique
   callerPhone String
+
+  summary String?
   
   operatorPhone String?
   operator Operator? @relation(fields: [operatorPhone], references: [phoneNumber])
