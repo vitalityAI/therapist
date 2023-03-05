@@ -41,9 +41,7 @@ app.post("/receive", async (req, res) => {
     model: "experimental_conversations",
   });
 
-  gather.say(
-    "Welcome to the suicide hotline. Tell me your name and what's going on?."
-  );
+  gather.say("Welcome to the suicide hotline. Tell me what's going on?.");
 
   log.info(twiml.toString());
 
