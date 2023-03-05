@@ -27,7 +27,7 @@ app.use(json());
 
 app.post("/receive", async (req, res) => {
   let callId = req.body.CallSid;
-  log.info(`CallSid: ${callId}`);
+  console.log(`CallSid: ${callId}`);
   const twiml = new VoiceResponse();
 
   await createSession(req.body.CallSid, req.body.From);
@@ -43,7 +43,7 @@ app.post("/receive", async (req, res) => {
 
   gather.say("Welcome to the suicide hotline. Tell me what's going on?.");
 
-  log.info(twiml.toString());
+  console.log(twiml.toString());
 
   twiml.redirect("/call/receive");
 
@@ -53,7 +53,7 @@ app.post("/receive", async (req, res) => {
 
 app.post("/respond", async (req, res) => {
   let callId = req.body.CallSid;
-  log.info(`CallSid: ${callId}`);
+  console.log(`CallSid: ${callId}`);
   const twiml = new VoiceResponse();
 
   let transcription = req.body.SpeechResult;
@@ -64,14 +64,14 @@ app.post("/respond", async (req, res) => {
   if (operatorReady) {
     let session = await findSessionByCallId(callId);
     let operatorPhone = session.operatorPhone;
-    log.info(`transferring call ${callId} to ${operatorPhone}`);
+    console.log(`transferring call ${callId} to ${operatorPhone}`);
 
     transferSession(req.body.CallSid, operatorPhone);
     twiml.say("We're connecting you to a counselor now.");
 
     await addMessage(callId, Role.BOT, "");
     let summary = await summarize(callId);
-    log.info(summary);
+    console.log(summary);
 
     const dial = twiml.dial({});
     dial.number(operatorPhone);
@@ -102,10 +102,10 @@ app.post("/respond", async (req, res) => {
 
 app.post("/summarize", async (req, res) => {
   let sessionId = req.body.SessionId;
-  log.info(`summarizing ${sessionId}`);
+  console.log(`summarizing ${sessionId}`);
 
   let summary = await summarize(sessionId);
-  log.info(summary);
+  console.log(summary);
 
   await postSummary(sessionId, summary);
 
