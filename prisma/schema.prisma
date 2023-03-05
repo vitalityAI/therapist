@@ -14,8 +14,28 @@ model Session {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
   startedAt DateTime @default(now())
+  transferedAt DateTime?
   endedAt DateTime?
 
   callId String @unique
-  phoneNumber String @unique
+  callerPhone String @unique
+  receiverPhone String? @unique
+  messages Message[]
+}
+
+enum Role {
+  USER
+  BOT
+  REP
+}
+
+model Message {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  createdAt DateTime @default(now())
+  role Role
+  content String
+
+  session Session @relation(fields: [sessionId], references: [id])
+  sessionId String @db.ObjectId
 }
