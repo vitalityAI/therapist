@@ -10,23 +10,16 @@ const app = Router();
 
 app.get('/', async (req, res) => {
   const b = req.query.open
-  let sessions = [];
+  let sessions = await db.session.findMany({
+    orderBy: {
+      startedAt: 'asc'
+    }
+  });
+  
   if (b == "true") {
-    sessions = await db.session.findMany({
-      where: {
-        operator: undefined
-      }
+    sessions = sessions.filter(session => {
+      return !session.transferedAt && !session.endedAt
     })
-  } else if(b == "false") {
-    sessions = await db.session.findMany({
-      where: {
-        none: {
-          operator: undefined
-        }
-      }
-    })
-  } else {
-    sessions = await db.session.findMany()
   }
 
   return res.status(200).json({
@@ -35,21 +28,21 @@ app.get('/', async (req, res) => {
 })
 
 app.get("/message", async (req, res) => {
-  const messages = await getMessagesBySession(req.body.sessionId)
+  const messages = await getMessagesBySession(req.query.sessionId)
   return res.status(200).json({
     messages
   })
 })
 
 app.get("/summary", async (req, res) => {
-  const summary = await summarize(req.body.sessionId)
+  const summary = await summarize(req.query.sessionId)
   return res.status(200).json({
     summary
   })
 })
 
 app.get('/transfer', async (req, res) => {
-  const {authorized, webSession} = authorize(req, res)
+  const {authorized, webSession} = await authorize(req, res)
   if(!authorized) return res.status(401).send(null)
   
   const operator = await db.operator.findUnique({
@@ -57,7 +50,7 @@ app.get('/transfer', async (req, res) => {
   })
   const session = await db.session.update({
     where: {
-      id: req.body.sessionId
+      id: req.query.sessionId
     },
     data: {
       operatorPhone: operator.phoneNumber
