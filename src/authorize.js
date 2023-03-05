@@ -8,11 +8,17 @@ export const authorize = async (req, res, admin=false) => {
     const auth = JSON.parse(req.cookies.auth)
     if(auth) authorization = `Bearer ${auth.access_token}`
   }
-  req.headers.authorization = authorization
-  
-  console.log(authorization)
+  const token = authorization.replace("Bearer ", "")
+  const webSession = await db.webSession.findUnique({
+    where: {
+      token: token
+    },
+  })
+
+  const authorized = webSession != null
   
   return {
-    authorized
+    authorized,
+    webSession
   }
 }

@@ -21,10 +21,20 @@ app.post("/", async (req, res) => {
 });
 
 app.post("/update", async (req, res) => {
-  console.log('hi')
-  const {authorized} = authorize(req, res)
-  return res.status(200).json({
+  const {authorized, webSession} = await authorize(req, res)
+  if(!authorized) return res.status(401).send(null)
 
+  const operator = await db.operator.update({
+    where: {
+      id: webSession.operatorId
+    },
+    data: {
+      phoneNumber: req.body.phone
+    }
+  })
+
+  return res.status(200).json({
+    operator
   })
 })
 
@@ -53,6 +63,7 @@ app.post("/login", async (req, res) => {
       operatorId: operator.id
     }
   });
+
   if(!webSession){
     webSession = await db.webSession.create({
       data: {
