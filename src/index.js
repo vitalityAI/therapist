@@ -1,6 +1,7 @@
 import express from "express";
 import call from "./api/call.js";
 import operator from "./api/operator.js"
+import session from "./api/session.js"
 import cors from "cors"
 
 const app = express();
@@ -10,6 +11,7 @@ app.use(cors())
 
 app.use('/call', call)
 app.use('/operator', operator)
+app.use('/session', session)
 
 // Create an HTTP server and listen for requests on port 3000
 app.listen(8080, () => {

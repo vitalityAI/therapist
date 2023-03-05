@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import {db} from './db.js'
 
-export const authorize = async (req, res, admin=false) => {
+export const authorize = async (req, res) => {
   let authorization = null
   if(!authorization) authorization = req.headers.authorization
   if(!authorization && req.cookies.auth) {
