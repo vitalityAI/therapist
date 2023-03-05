@@ -69,10 +69,6 @@ app.post("/respond", async (req, res) => {
     transferSession(req.body.CallSid, operatorPhone);
     twiml.say("We're connecting you to a counselor now.");
 
-    await addMessage(callId, Role.BOT, "");
-    let summary = await summarize(callId);
-    console.log(summary);
-
     const dial = twiml.dial({});
     dial.number(operatorPhone);
     res.type("text/xml");
