@@ -42,7 +42,9 @@ app.post("/receive", async (req, res) => {
     model: "experimental_conversations",
   });
 
-  gather.say("Welcome to the suicide hotline. Tell me what's going on?.");
+  gather.say(
+    "Welcome to the Suicide Prevention Hotline. You have reached a virtual resource where you can talk through your problems in a safe and supportive environment. Please know that you are not alone, and help is available. How are you feeling right now?"
+  );
 
   console.log(twiml.toString());
 
