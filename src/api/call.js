@@ -43,7 +43,7 @@ app.post("/receive", async (req, res) => {
   });
 
   gather.say(
-    { voice: "Polly.Joanna" },
+    { voice: "Polly.Salli" },
     "Welcome to the Suicide Prevention Hotline. You have reached a virtual resource where you can talk through your problems in a safe and supportive environment. Please know that you are not alone, and help is available. How are you feeling right now?"
   );
 
@@ -72,7 +72,7 @@ app.post("/respond", async (req, res) => {
 
     transferSession(req.body.CallSid, operatorPhone);
     twiml.say(
-      { voice: "Polly.Joanna" },
+      { voice: "Polly.Sali" },
       "We're connecting you to a counselor now."
     );
 
@@ -94,7 +94,7 @@ app.post("/respond", async (req, res) => {
 
   let response = await chat(callId);
 
-  gather.say({ voice: "Polly.Joanna" }, response);
+  gather.say({ voice: "Polly.Salli" }, response);
   await addMessage(callId, Role.BOT, response);
 
   twiml.redirect("/call/respond");
