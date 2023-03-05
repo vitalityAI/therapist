@@ -31,6 +31,7 @@ app.post("/receive", async (req, res) => {
   const twiml = new VoiceResponse();
 
   await createSession(req.body.CallSid, req.body.From);
+  console.log(`created session with CallSid: ${callId}`);
 
   const gather = twiml.gather({
     action: "/call/respond",
