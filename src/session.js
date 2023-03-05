@@ -30,6 +30,22 @@ export const transferSession = async (callId, operatorPhone) => {
   });
 };
 
+export const postSummary = async (sessionId, summary) => {
+  return await db.session.update({
+    where: {
+      id: sessionId,
+    },
+    data: {
+      summary: summary,
+    },
+  });
+};
+
+export const checkOperatorReady = async (callId) => {
+  const session = await findSessionByCallId(callId);
+  return session.operatorPhone != null;
+};
+
 export const endSession = async (callId) => {
   return await db.session.update({
     where: {
@@ -57,6 +73,21 @@ export const getMessages = async (callId) => {
     where: {
       session: {
         callId: callId,
+      },
+    },
+    orderBy: [
+      {
+        createdAt: "asc",
+      },
+    ],
+  });
+};
+
+export const getMessagesBySession = async (sessionId) => {
+  return await db.message.findMany({
+    where: {
+      session: {
+        id: sessionId,
       },
     },
     orderBy: [
