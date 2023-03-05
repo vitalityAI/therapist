@@ -19,6 +19,7 @@ import {
   transferSession,
   checkOperatorReady,
   postSummary,
+  completeCall,
 } from "../lib/session.js";
 import { chat, summarize } from "../lib/chat.js";
 
@@ -41,7 +42,10 @@ app.post("/receive", async (req, res) => {
     model: "experimental_conversations",
   });
 
-  gather.say("Welcome to the suicide hotline. Tell me what's going on?.");
+  gather.say(
+    { voice: "Polly.Salli" },
+    "Welcome to the Suicide Prevention Hotline. You have reached a virtual resource where you can talk through your problems in a safe and supportive environment. Please know that you are not alone, and help is available. How are you feeling right now?"
+  );
 
   console.log(twiml.toString());
 
@@ -67,7 +71,10 @@ app.post("/respond", async (req, res) => {
     console.log(`transferring call ${callId} to ${operatorPhone}`);
 
     transferSession(req.body.CallSid, operatorPhone);
-    twiml.say("We're connecting you to a counselor now.");
+    twiml.say(
+      { voice: "Polly.Sali" },
+      "We're connecting you to a counselor now."
+    );
 
     const dial = twiml.dial({});
     dial.number(operatorPhone);
@@ -87,7 +94,7 @@ app.post("/respond", async (req, res) => {
 
   let response = await chat(callId);
 
-  gather.say(response);
+  gather.say({ voice: "Polly.Salli" }, response);
   await addMessage(callId, Role.BOT, response);
 
   twiml.redirect("/call/respond");
@@ -107,6 +114,16 @@ app.post("/summarize", async (req, res) => {
 
   res.type("application/json");
   res.send(JSON.stringify({ SessionId: sessionId, summary: summary }));
+});
+
+app.post("/status", async (req, res) => {
+  let callId = req.body.CallSid;
+  let callStatus = req.body.CallStatus;
+
+  if (callStatus === "completed") {
+    console.log(`completing call ${callId}`);
+    await completeCall(callId);
+  }
 });
 
 export default app;
