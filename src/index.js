@@ -1,6 +1,6 @@
 import express from "express";
-import call from "./call.js";
-import operator from "./operator.js"
+import call from "./api/call.js";
+import operator from "./api/operator.js"
 import cors from "cors"
 
 const app = express();

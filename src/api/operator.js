@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 import { Router } from "express";
-import { authorize } from "./authorize.js";
-import { db } from "./db.js";
+import { authorize } from "../lib/authorize.js";
+import { db } from "../lib/db.js";
 dotenv.config();
 
 const app = Router();

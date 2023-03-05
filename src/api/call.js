@@ -19,8 +19,8 @@ import {
   transferSession,
   checkOperatorReady,
   postSummary,
-} from "./session.js";
-import { chat, summarize } from "./chat.js";
+} from "../lib/session.js";
+import { chat, summarize } from "../lib/chat.js";
 
 const app = Router();
 app.use(json());
