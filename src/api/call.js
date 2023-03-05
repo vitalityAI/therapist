@@ -72,7 +72,7 @@ app.post("/respond", async (req, res) => {
 
     transferSession(req.body.CallSid, operatorPhone);
     twiml.say(
-      { voice: "Polly.Sali" },
+      { voice: "Polly.Salli" },
       "We're connecting you to a counselor now."
     );
 
