@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import * as dotenv from "dotenv";
-import { getMessages } from "./session";
+import { getMessages } from "./session.js";
 import { Role } from "@prisma/client";
 dotenv.config();
 
@@ -31,8 +31,6 @@ export const chat = async (callId) => {
     },
   ];
 
- 
-
   for (let msg of msgs) {
     messages.push({
       role: convertRole(msg.role),
@@ -40,8 +38,10 @@ export const chat = async (callId) => {
     });
   }
 
-  await openai.createChatCompletion({
+  const res = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: messages,
   });
+
+  return res.data.choices[0].message.content
 };
