@@ -39,7 +39,7 @@ model Message {
 
   createdAt DateTime @default(now())
   role Role
-  content String
+  content String @default("")
 
   session Session @relation(fields: [sessionId], references: [id])
   sessionId String @db.ObjectId

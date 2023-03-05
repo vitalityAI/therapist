@@ -2,6 +2,9 @@ import { Role } from "@prisma/client";
 import { db } from "./db.js";
 
 export const createSession = async (callId, callerPhone) => {
+  let session = await findSessionByCallId(callId);
+  if (session) return session;
+
   return await db.session.create({
     data: {
       callId: callId,
