@@ -14,21 +14,7 @@ const VoiceResponse = twilio.twiml.VoiceResponse;
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 
-app.post("/voice", (request, response) => {
-  const city = request.body.FromCity;
-  console.log(`They're from ${city}!`);
-
-  // Use the Twilio Node.js SDK to build an XML response
-  const twiml = new VoiceResponse();
-  twiml.say({ voice: "alice" }, `Never gonna give you up ${city}.`);
-  twiml.play({}, "https://demo.twilio.com/docs/classic.mp3");
-
-  // Render the response as XML in reply to the webhook request
-  response.type("text/xml");
-  response.send(twiml.toString());
-});
-
-app.post("/call", (req, res) => {
+app.post("/receive", (req, res) => {
   // Use the Twilio Node.js SDK to build an XML response
   const twiml = new VoiceResponse();
 
@@ -50,10 +36,11 @@ app.post("/call", (req, res) => {
 });
 
 app.post("/respond", async (req, res) => {
+  const twiml = new VoiceResponse();
+
   let transcription = req.body.SpeechResult;
   console.log(transcription);
 
-  const twiml = new VoiceResponse();
   twiml.say(`You said, ${transcription}`);
   twiml.say(`Don't kill yourself.`);
 
