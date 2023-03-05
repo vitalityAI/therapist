@@ -36,7 +36,10 @@ export const chat = async (callId) => {
   for (let msg of msgs) {
     messages.push({
       role: convertRole(msg.role),
-      content: msg.content,
+      content:
+        msg.content.length > 0
+          ? msg.content
+          : "This message was not recorded correctly.",
     });
   }
 
