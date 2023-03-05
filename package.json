@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "chat": "node src/chat.js",
     "call": "node src/call.js",
     "test": "node src/test.js",
@@ -12,6 +13,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.11.0",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "openai": "^3.1.0",
     "twilio": "^4.8.0"
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "dotenv": "^16.0.3",
+    "nodemon": "^2.0.21",
     "prisma": "^4.11.0"
   }
 }
