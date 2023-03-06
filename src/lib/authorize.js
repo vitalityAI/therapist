@@ -16,7 +16,7 @@ export const authorize = async (req, res) => {
   })
 
   const authorized = webSession != null
-  
+
   return {
     authorized,
     webSession
