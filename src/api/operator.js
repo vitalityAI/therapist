@@ -7,8 +7,9 @@ dotenv.config();
 const app = Router();
 
 app.post("/", async (req, res) => {
+  let operator = null;
   try {
-    const operator = await db.operator.create({
+    operator = await db.operator.create({
       data: {
         name: req.body.name,
         phoneNumber: req.body.phoneNumber,
@@ -27,9 +28,10 @@ app.post("/", async (req, res) => {
 
 app.post("/update", async (req, res) => {
   const { authorized, webSession } = await authorize(req, res);
+  let operator = null;
   if (!authorized) return res.status(401).send(null);
   try {
-    const operator = await db.operator.update({
+    operator = await db.operator.update({
       where: {
         id: webSession.operatorId,
       },
