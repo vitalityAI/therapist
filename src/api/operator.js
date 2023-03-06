@@ -17,7 +17,7 @@ app.post("/", async (req, res) => {
     });
   } catch (e) {
     console.log(e);
-    res.status(500).send("Operator creation failed.");
+    return res.status(500).send("Operator creation failed.");
   }
 
   return res.status(200).json({
